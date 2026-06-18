@@ -1,0 +1,53 @@
+# =============================================================================
+# Configuration for the seagrass meadow coverage estimation pipeline
+# =============================================================================
+# All parameters that depend on YOUR data are controlled from here.
+# Read the README.md for a detailed explanation of each option.
+
+# --- Input / output ----------------------------------------------------------
+paths:
+  video: "data/my_video.mp4"          # input video (the ORIGINAL, see GPMF note)
+  workdir: "output"                   # folder where all results are generated
+  model: "model/best_2.pt"            # trained model weights
+
+# --- Frame extraction --------------------------------------------------------
+frames:
+  fps: 30                             # video frames per second
+  img_width: 480                      # resolution at which frames are saved/processed
+  img_height: 480                     # (the model was trained at 480x480; change with care)
+  frame_skip: 1                       # 1 = all frames; 2 = every other frame, etc.
+
+# --- Model inference ---------------------------------------------------------
+inference:
+  imgsz: 896                          # inference size (the final model uses 896)
+  conf: 0.25                          # confidence threshold
+  iou: 0.7                            # NMS threshold
+
+# --- Geolocation (GPS) -------------------------------------------------------
+# Choose ONE GPS source:
+#   "gpx"   -> you use an external .gpx file (e.g. from a tablet/phone)
+#   "gpmf"  -> you use the GPS that the GoPro itself records inside the video (GPS5 stream)
+#   "none"  -> you have no GPS; coverage is computed but NO map is generated
+gps:
+  source: "gpx"
+  gpx_file: "data/my_track.gpx"       # only used if source == "gpx"
+
+  # Time offset (seconds) between the start of the GPS and the start of the video.
+  # Leave it at 0 if the video and the GPS start at the same time (normal case).
+  # Use it only if you trimmed the video relative to the original recording
+  offset_seconds: 0
+
+# --- Tilt and coverage estimation --------------------------------------------
+# The horizon line is estimated from the camera's accelerometer.
+# These thresholds define the angle -> vertical horizon position mapping and
+# are calibrated for the TFG setup (GoPro on a sled, ~1 m above the seabed).
+# Adjust them if your camera points differently. See README for the explanation.
+tilt:
+  enabled: true                       # false = no horizon correction (uses the whole frame)
+  angle_full_water: -90               # angle (deg) at which the horizon is at mid-image
+  angle_no_water: -60                 # angle (deg) above which there is no water (horizon at top)
+
+# --- Geospatial visualization ------------------------------------------------
+map:
+  window: 30                          # number of frames to average per segment (30 ≈ 1 s)
+  zoom: 17                            # initial zoom of the interactive map

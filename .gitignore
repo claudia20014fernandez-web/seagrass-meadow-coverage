@@ -1,0 +1,23 @@
+# Datos de entrada y salida
+data/
+salida/
+*.mp4
+*.MP4
+*.gpx
+frames/
+runs*/
+predicciones*/
+
+# Resultados
+*.html
+mapa_cobertura.png
+cobertura_frames.csv
+telemetria_frames.csv
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
+.ultralytics/

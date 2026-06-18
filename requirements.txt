@@ -1,0 +1,15 @@
+# Pipeline principal (cualquier sistema operativo)
+ultralytics>=8.3.0
+opencv-python>=4.8.0
+numpy>=1.24.0
+pandas>=2.0.0
+Pillow>=10.0.0
+PyYAML>=6.0
+gpxpy>=1.6.0
+folium>=0.15.0
+matplotlib>=3.7.0
+contextily>=1.4.0
+pyproj>=3.6.0
+
+# Solo para la extracción de telemetría (SOLO Linux): instalar aparte
+# pip install py-gpmf-parser
